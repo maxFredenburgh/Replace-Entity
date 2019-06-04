@@ -1,0 +1,9 @@
+
+replaceentity.replaceEntityForm:
+  path: '/replaceentity/form/default'
+  defaults:
+    _form: '\Drupal\replaceentity\Form\DefaultForm'
+    _title: 'Replace and get contents from <drupal-entity> elements'
+  requirements:
+    _access: 'TRUE'
+  

@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains replaceentity.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function replaceentity_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the replaceentity module.
+    case 'help.page.replaceentity':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module will replace drupal-entity') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function replaceentity_theme() {
+  return [
+    'replaceentity' => [
+      'render element' => 'children',
+    ],
+  ];
+}

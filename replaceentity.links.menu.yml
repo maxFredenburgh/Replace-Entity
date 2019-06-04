@@ -1,0 +1,6 @@
+replaceentity.admin:
+  title: 'Replace Drupal Entity Tags'
+  description: 'Replace <drupal-entity> Tags'
+  parent: system.admin_config_development
+  route_name: replaceentity.replaceEntityForm
+  weight: 100

@@ -1,0 +1,14 @@
+'delete replace entity':
+  title: Delete entity replace entity
+  description: Allows users to delete replace entity.
+'add replace entity':
+  title: Add entity replace entity
+'view replace entity':
+  title: View entity replace entity
+'edit replace entity':
+  title: Edit entity replace entity
+  description: Allows users to edit replace entity.
+'administer replace entity':
+  title: Administer settings
+  description: Allows users to alter the settings related to replace entity.
+  restrict access: TRUE

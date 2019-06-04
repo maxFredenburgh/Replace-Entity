@@ -1,0 +1,14 @@
+{
+  "name": "drupal/replaceentity",
+  "type": "drupal-module",
+  "description": "This module will merge translations of nodes",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/replaceentity",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/replaceentity",
+    "source": "http://cgit.drupalcode.org/replaceentity"
+  },
+  "require": { }
+}
