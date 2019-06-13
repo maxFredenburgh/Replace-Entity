@@ -128,6 +128,10 @@ class DefaultForm extends FormBase
 
                 }else if ($replacetype=='data_entity'){
 
+                    $query = \Drupal::entityQuery('node');
+                    $nids = $query->execute();
+                    $all_nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+
                     foreach ($nodes as $node) {
                         $body = $node->get('body')->value;
                         if (preg_match("/data-entity-substitution/", $body, $match)) {
@@ -146,7 +150,7 @@ class DefaultForm extends FormBase
                                         //Get node id
                                         $prev_node = preg_split('{node/}', $href);
                                         $node_loc=$prev_node[1];
-                                        foreach($nodes as $n){
+                                        foreach($all_nodes as $n){
                                             if($n->get('field_previous_id')->value==$node_loc){
                                                 $node_loc_value=$n->get('nid')->value;
                                                 $href=$prev_node[0].'node/'.$node_loc_value;
@@ -281,6 +285,10 @@ class DefaultForm extends FormBase
                 }
 
             }elseif($replacetype=='data_entity'){
+                $query = \Drupal::entityQuery('node');
+                $nids = $query->execute();
+                $all_nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+
                 foreach ($nodes as $node) {
                     $body = $node->get('body')->value;
                     if (preg_match("/data-entity-substitution/", $body, $match)) {
@@ -292,6 +300,8 @@ class DefaultForm extends FormBase
 
                             $entity_block = preg_split('{>}', $text_chunks[$i]);
 
+                            $old_text="<a data-entity-substitution".$entity_block[0].">";
+
                             $href = preg_split('{href="}', $entity_block[0]);
                             $href = preg_split('{"}', $href[1]);
                             $href=$href[0];
@@ -300,7 +310,7 @@ class DefaultForm extends FormBase
                                 //Get node id
                                 $prev_node = preg_split('{node/}', $href);
                                 $node_loc=$prev_node[1];
-                                foreach($nodes as $n){
+                                foreach($all_nodes as $n){
                                     if($n->get('field_previous_id')->value==$node_loc){
                                         $node_loc_value=$n->get('nid')->value;
                                         $href=$prev_node[0].'node/'.$node_loc_value;
@@ -308,9 +318,18 @@ class DefaultForm extends FormBase
                                 }
 
                             }
+                            $bod="";
                             $text = "<a href=\"".$href."\">";
 
-                            $new_body=$new_body . $text . $entity_block[1] .'>'.$entity_block[2];
+                            for($x=1;$x<sizeof($entity_block);$x++){
+                                if($x==sizeof($entity_block)-1){
+                                    $bod=$bod.$entity_block[$x];
+                                }else{
+                                    $bod=$bod.$entity_block[$x].">";
+                                }
+                            }
+
+                            $new_body=$new_body . $text . $bod;
 
                         }
                         $node->body->value = $new_body;
