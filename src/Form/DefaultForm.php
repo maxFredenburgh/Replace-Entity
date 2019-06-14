@@ -72,7 +72,7 @@ class DefaultForm extends FormBase
                 $rows = array();
                 $connection = \Drupal::database();
 
-                if($replacetype=='drupal-entity'){
+                if($replacetype=='drupal_entity'){
                     foreach ($nodes as $node) {
                         $body = $node->get('body')->value;
                         if (preg_match("/drupal-entity/", $body, $match)) {
@@ -248,8 +248,8 @@ class DefaultForm extends FormBase
                                 $entity_block = preg_split('{</drupal-entity>}', $text_chunks[$i]);
 
                                 for ($e = 0; $e < sizeof($entity_block); $e++) {
-                                    if ($e % 2 == 0)
-                                        $uuid = preg_split('{data-entity-uuid="}', $entity_block[$e]);
+                                    if ($e % 2 == 0) {
+                                    $uuid = preg_split('{data-entity-uuid="}', $entity_block[$e]);
                                     $uuid = preg_split('{"}', $uuid[1]);
 
                                     $query = $connection->query
@@ -272,11 +272,12 @@ class DefaultForm extends FormBase
                                     $text = "<img alt=\"" . $alt . "\" src=\"/sites/default/files/" . $img_loc . "\"/>";
 
                                     $new_body = $new_body . $text . $entity_block[$e + 1];
+                                }
 
                                 }
                             }
                         }
-
+                        $node->body->value = "";
                         $node->body->value = $new_body;
                         $node->save();
                         drupal_set_message('Successfully Replaced: ' . $node->get('title')->value);
